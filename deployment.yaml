@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scraper-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scraper
+  minReadySeconds: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels: 
+        app: scraper
+    spec:
+      containers:
+      - name: scraper
+        image: kiote/scraper:1.0.3
